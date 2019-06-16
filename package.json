@@ -1,0 +1,25 @@
+{
+    "name": "typescripttest",
+    "version": "1.0.0",
+    "description": "Protractor Typescript automation framework",
+    "main": "config.js",
+    "dependencies": {
+        "@types/jasmine": "^3.3.13",
+        "@types/node": "^12.0.8",
+        "chromedriver": "^75.0.0",
+        "log4js": "^4.3.1",
+        "protractor": "^4.0.14"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "pretest": "npm run tsc",
+        "test": "protractor ConvertedJSFiles/config.js",
+        "tsc": "tsc"
+    },
+    "keywords": [
+        "Protractor",
+        "Typescript"
+    ],
+    "author": "Chris Just",
+    "license": "ISC"
+}
