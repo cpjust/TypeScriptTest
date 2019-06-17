@@ -8,6 +8,7 @@ exports.config = {
         'browserName': 'chrome',
         chromeOptions: {
             'w3c': false,
+            args: ["--safe-mode"]
         }
     },
     chromeDriver: '75.0.3770.90',
@@ -17,11 +18,10 @@ exports.config = {
         defaultTimeoutInterval: 90000
     },
     onPrepare: () => {
-        //configure('./filename');
         exports.logger.level = 'trace';
         let globals = require('protractor');
         let browser = globals.browser;
-        browser.manage().window().maximize();
+        //        browser.manage().window().maximize();
         browser.manage().timeouts().implicitlyWait(5000);
         jasmine.getEnv().addReporter({
             specStarted: function (result) {

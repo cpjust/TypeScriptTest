@@ -9,7 +9,7 @@ export let config: Config = {
         'browserName': 'chrome',
         chromeOptions: {
             'w3c': false,
-//            args: [ "--headless", "--disable-gpu", "--window-size=800,600", "--javascript-harmony" ]
+            args: [ "--safe-mode" ]
         }
     },
     chromeDriver: '75.0.3770.90',
@@ -19,11 +19,10 @@ export let config: Config = {
         defaultTimeoutInterval: 90000
     },
     onPrepare: () => {
-        //configure('./filename');
         logger.level = 'trace';
         let globals = require('protractor');
         let browser = globals.browser;
-        browser.manage().window().maximize();
+//        browser.manage().window().maximize();
         browser.manage().timeouts().implicitlyWait(5000);
 
         jasmine.getEnv().addReporter({
