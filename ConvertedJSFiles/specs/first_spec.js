@@ -16,16 +16,16 @@ describe('Testing promises', function () {
         return protractor_1.browser.sleep(time).then(() => config_1.logger.info(msg));
     }
     function nativePromise(msg, time) {
-        return new Promise(() => {
-            printLater(msg, time);
+        return new Promise((resolve, reject) => {
+            printLater(msg, time).then(() => resolve("done"));
         });
     }
     function protractorPromise(msg, time) {
-        return new protractor_1.protractor.promise.Promise(() => {
-            printLater(msg, time);
+        return new protractor_1.protractor.promise.Promise((resolve, reject) => {
+            printLater(msg, time).then(() => resolve("done"));
         });
     }
-    it('promise chain 1', function () {
+    it('promise chain 1', function (done) {
         /* Prints the following:
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
@@ -42,46 +42,57 @@ describe('Testing promises', function () {
             printLater("--2", 200).then(() => {
                 printLater("--3", 300).thenFinally(() => {
                     config_1.logger.info("--done");
+                    done();
                 });
             });
         });
         config_1.logger.trace("End");
     });
-    it('promise chain 1.1', function () {
+    it('promise chain 1.1', function (done) {
         /* Prints the following:
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
         [TRACE] default - End
         [INFO] default - --1
+        [DEBUG] default - Sleeping for 200 ms...
         */
         config_1.logger.trace("Start");
         nativePromise("--1", 100).then(() => {
             nativePromise("--2", 200).then(() => {
                 nativePromise("--3", 300).finally(() => {
                     config_1.logger.info("--done");
+                    done();
                 });
             });
         });
         config_1.logger.trace("End");
     });
-    it('promise chain 1.2', function () {
+    it('promise chain 1.2', function (done) {
         /* Prints the following:
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
         [TRACE] default - End
         [INFO] default - --1
+        [DEBUG] default - Sleeping for 200 ms...
+        [INFO] default - --2
+        [DEBUG] default - Sleeping for 300 ms...
+        [INFO] default - --2
+        [INFO] default - --done
+        [INFO] default - --3
+        [INFO] default - --done
         */
         config_1.logger.trace("Start");
         protractorPromise("--1", 100).then(() => {
             protractorPromise("--2", 200).then(() => {
                 protractorPromise("--3", 300).thenFinally(() => {
                     config_1.logger.info("--done");
+                    done();
                 });
             });
         });
         config_1.logger.trace("End");
     });
-    it('promise chain 2', function () {
+    it('promise chain 2', function (done) {
         /* Prints the following:
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
@@ -100,15 +111,20 @@ describe('Testing promises', function () {
             printLater("--3", 300);
         }).thenFinally(() => {
             config_1.logger.info("--done");
+            done();
         });
         config_1.logger.trace("End");
     });
-    it('promise chain 2.1', function () {
+    it('promise chain 2.1', function (done) {
         /* Prints the following:
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
         [TRACE] default - End
         [INFO] default - --1
+        [DEBUG] default - Sleeping for 200 ms...
+        [DEBUG] default - Sleeping for 300 ms...
+        [INFO] default - --3
+        [INFO] default - --done
         */
         config_1.logger.trace("Start");
         nativePromise("--1", 100).then(() => {
@@ -117,15 +133,22 @@ describe('Testing promises', function () {
             nativePromise("--3", 300);
         }).finally(() => {
             config_1.logger.info("--done");
+            done();
         });
         config_1.logger.trace("End");
     });
-    it('promise chain 2.2', function () {
+    it('promise chain 2.2', function (done) {
         /* Prints the following:
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
         [TRACE] default - End
+        [INFO] default - --2
         [INFO] default - --1
+        [DEBUG] default - Sleeping for 200 ms...
+        [INFO] default - --2
+        [DEBUG] default - Sleeping for 300 ms...
+        [INFO] default - --3
+        [INFO] default - --done
         */
         config_1.logger.trace("Start");
         protractorPromise("--1", 100).then(() => {
@@ -134,10 +157,11 @@ describe('Testing promises', function () {
             protractorPromise("--3", 300);
         }).thenFinally(() => {
             config_1.logger.info("--done");
+            done();
         });
         config_1.logger.trace("End");
     });
-    it('await promise 3', function () {
+    it('await promise 3', function (done) {
         return __awaiter(this, void 0, void 0, function* () {
             // Works as expected.
             yield config_1.logger.trace("Start");
@@ -146,36 +170,31 @@ describe('Testing promises', function () {
             yield printLater("--3", 300);
             yield config_1.logger.info("--done");
             yield config_1.logger.trace("End");
+            yield done();
         });
     });
-    it('await promise 3.1', function () {
+    it('await promise 3.1', function (done) {
         return __awaiter(this, void 0, void 0, function* () {
-            /* Prints the following:
-            [TRACE] default - Start
-            [DEBUG] default - Sleeping for 100 ms...
-            [INFO] default - --1
-            */
+            // Works as expected.
             yield config_1.logger.trace("Start");
             yield nativePromise("--1", 100);
-            yield nativePromise("--2", 200); // Gets stuck after "--1"
+            yield nativePromise("--2", 200);
             yield nativePromise("--3", 300);
             yield config_1.logger.info("--done");
             yield config_1.logger.trace("End");
+            yield done();
         });
     });
-    it('await promise 3.2', function () {
+    it('await promise 3.2', function (done) {
         return __awaiter(this, void 0, void 0, function* () {
-            /* Prints the following:
-            [TRACE] default - Start
-            [DEBUG] default - Sleeping for 100 ms...
-            [INFO] default - --1
-            */
+            // Works as expected.
             yield config_1.logger.trace("Start");
             yield protractorPromise("--1", 100);
-            yield protractorPromise("--2", 200); // Gets stuck after "--1"
+            yield protractorPromise("--2", 200);
             yield protractorPromise("--3", 300);
             yield config_1.logger.info("--done");
             yield config_1.logger.trace("End");
+            yield done();
         });
     });
 });

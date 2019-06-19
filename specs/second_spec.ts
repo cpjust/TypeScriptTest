@@ -1,12 +1,10 @@
 import { logger } from "../config";
-import { Locator } from 'protractor/built/locators';
-import { ElementFinder, browser, by, element, protractor } from 'protractor';
-import { reject } from "q";
+import { browser, protractor } from 'protractor';
 
 describe("Chris's promise tests: ",
     function() {
         function sleep(time) {
-            return new protractor.promise.Promise((resolve) => {
+            return new protractor.promise.Promise((resolve, reject) => {
                 logger.trace("Sleeping for: " + time);
                 setTimeout(resolve, time);
                 logger.trace("Slept for: " + time);
@@ -14,7 +12,7 @@ describe("Chris's promise tests: ",
         }
 
         function cjustPromise(msg, time) {
-            return new protractor.promise.Promise((resolve) => {
+            return new protractor.promise.Promise((resolve, reject) => {
                 sleep(time).then(() => {
                     logger.debug(msg);
                     resolve("Worked.");

@@ -2,22 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = require("../config");
 const protractor_1 = require("protractor");
-const q_1 = require("q");
 describe("Chris's promise tests: ", function () {
     function sleep(time) {
-        return new protractor_1.protractor.promise.Promise((resolve) => {
+        return new protractor_1.protractor.promise.Promise((resolve, reject) => {
             config_1.logger.trace("Sleeping for: " + time);
             setTimeout(resolve, time);
             config_1.logger.trace("Slept for: " + time);
         });
     }
     function cjustPromise(msg, time) {
-        return new protractor_1.protractor.promise.Promise((resolve) => {
+        return new protractor_1.protractor.promise.Promise((resolve, reject) => {
             sleep(time).then(() => {
                 config_1.logger.debug(msg);
                 resolve("Worked.");
             }).catch((e) => {
-                q_1.reject(Error(e));
+                reject(Error(e));
             });
         });
     }
