@@ -38,10 +38,10 @@ describe("Chris's promise tests: ", function () {
         */
         config_1.logger.trace("*** test 1");
         cjustPromise("--1", 100).then(() => {
-            cjustPromise("--2", 200).then(() => {
+            return cjustPromise("--2", 200).then(() => {
                 expect(false).toBe(true);
-                cjustPromise("--3", 300).then(() => {
-                    sleep(400).then(() => {
+                return cjustPromise("--3", 300).then(() => {
+                    return sleep(400).then(() => {
                         config_1.logger.debug("--4");
                         done();
                     });
@@ -67,12 +67,12 @@ describe("Chris's promise tests: ", function () {
         */
         config_1.logger.trace("*** test 2");
         cjustPromise("--1", 100).then(() => {
-            cjustPromise("--2", 200);
+            return cjustPromise("--2", 200);
         }).then(() => {
             expect(false).toBe(true);
-            cjustPromise("--3", 300);
+            return cjustPromise("--3", 300);
         }).then(() => {
-            sleep(400).then(() => {
+            return sleep(400).then(() => {
                 config_1.logger.debug("--4");
                 done();
             });
@@ -100,7 +100,7 @@ describe("Chris's promise tests: ", function () {
         expect(false).toBe(true);
         flow.execute(() => cjustPromise("--3", 300));
         flow.execute(() => {
-            sleep(400).then(() => {
+            return sleep(400).then(() => {
                 config_1.logger.debug("--4");
             });
         });

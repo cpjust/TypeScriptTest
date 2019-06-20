@@ -35,8 +35,8 @@ describe('Testing promises', function () {
         logger.trace("Start");
 
         printLater("--1", 100).then(() => {
-            printLater("--2", 200).then(() => {
-                printLater("--3", 300).thenFinally(() => {
+            return printLater("--2", 200).then(() => {
+                return printLater("--3", 300).thenFinally(() => {
                     logger.info("--done");
                     done();
                 });
@@ -53,12 +53,16 @@ describe('Testing promises', function () {
         [TRACE] default - End
         [INFO] default - --1
         [DEBUG] default - Sleeping for 200 ms...
+        [INFO] default - --2
+        [DEBUG] default - Sleeping for 300 ms...
+        [INFO] default - --3
+        [INFO] default - --done
         */
         logger.trace("Start");
 
         nativePromise("--1", 100).then(() => {
-            nativePromise("--2", 200).then(() => {
-                nativePromise("--3", 300).finally(() => {
+            return nativePromise("--2", 200).then(() => {
+                return nativePromise("--3", 300).finally(() => {
                     logger.info("--done");
                     done();
                 });
@@ -77,8 +81,6 @@ describe('Testing promises', function () {
         [DEBUG] default - Sleeping for 200 ms...
         [INFO] default - --2
         [DEBUG] default - Sleeping for 300 ms...
-        [INFO] default - --2
-        [INFO] default - --done
         [INFO] default - --3
         [INFO] default - --done
         */
@@ -111,9 +113,9 @@ describe('Testing promises', function () {
         logger.trace("Start");
 
         printLater("--1", 100).then(() => {
-            printLater("--2", 200);
+            return printLater("--2", 200);
         }).then(() => {
-            printLater("--3", 300);
+            return printLater("--3", 300);
         }).thenFinally(() => {
             logger.info("--done");
             done();
@@ -129,6 +131,7 @@ describe('Testing promises', function () {
         [TRACE] default - End
         [INFO] default - --1
         [DEBUG] default - Sleeping for 200 ms...
+        [INFO] default - --2
         [DEBUG] default - Sleeping for 300 ms...
         [INFO] default - --3
         [INFO] default - --done
@@ -136,9 +139,9 @@ describe('Testing promises', function () {
         logger.trace("Start");
 
         nativePromise("--1", 100).then(() => {
-            nativePromise("--2", 200);
+            return nativePromise("--2", 200);
         }).then(() => {
-            nativePromise("--3", 300);
+            return nativePromise("--3", 300);
         }).finally(() => {
             logger.info("--done");
             done();
@@ -152,7 +155,6 @@ describe('Testing promises', function () {
         [TRACE] default - Start
         [DEBUG] default - Sleeping for 100 ms...
         [TRACE] default - End
-        [INFO] default - --2
         [INFO] default - --1
         [DEBUG] default - Sleeping for 200 ms...
         [INFO] default - --2
@@ -163,9 +165,9 @@ describe('Testing promises', function () {
         logger.trace("Start");
 
         protractorPromise("--1", 100).then(() => {
-            protractorPromise("--2", 200);
+            return protractorPromise("--2", 200);
         }).then(() => {
-            protractorPromise("--3", 300);
+            return protractorPromise("--3", 300);
         }).thenFinally(() => {
             logger.info("--done");
             done();
