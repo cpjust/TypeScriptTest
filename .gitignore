@@ -59,3 +59,8 @@ typings/
 
 # next.js build output
 .next
+
+# Added by cjust:
+ConvertedJSFiles/*
+report.*.json
+.idea/*
