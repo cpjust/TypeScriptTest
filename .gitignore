@@ -61,6 +61,5 @@ typings/
 .next
 
 # Added by cjust:
-ConvertedJSFiles/*
 report.*.json
 .idea/*
