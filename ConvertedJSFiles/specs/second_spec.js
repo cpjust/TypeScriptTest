@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = require("../config");
 const protractor_1 = require("protractor");
-describe("Chris's promise tests: ", function () {
+xdescribe("Chris's promise tests: ", function () {
     function sleep(time) {
         return new protractor_1.protractor.promise.Promise((resolve, reject) => {
             config_1.logger.trace("Sleeping for: " + time);
@@ -51,18 +51,17 @@ describe("Chris's promise tests: ", function () {
     });
     it("cjust - testing promises - 2", (done) => {
         /* Prints the following:
-        [TRACE] default - *** test 2
         [TRACE] default - Sleeping for: 100
         [TRACE] default - Slept for: 100
         [DEBUG] default - --1
         [TRACE] default - Sleeping for: 200
         [TRACE] default - Slept for: 200
+        [DEBUG] default - --2
         [TRACE] default - Sleeping for: 300
         [TRACE] default - Slept for: 300
+        [DEBUG] default - --3
         [TRACE] default - Sleeping for: 400
         [TRACE] default - Slept for: 400
-        [DEBUG] default - --2
-        [DEBUG] default - --3
         [DEBUG] default - --4
         */
         config_1.logger.trace("*** test 2");
@@ -92,6 +91,7 @@ describe("Chris's promise tests: ", function () {
         [DEBUG] default - --3
         [TRACE] default - Sleeping for: 400
         [TRACE] default - Slept for: 400
+        [DEBUG] default - --4
         */
         config_1.logger.trace("*** test 3");
         let flow = protractor_1.browser.controlFlow();
