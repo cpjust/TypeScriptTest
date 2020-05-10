@@ -16,7 +16,7 @@
     "scripts": {
         "pretest": "npm run tsc",
         "test": "protractor ConvertedJSFiles/config.js",
-        "tsc": "./node_modules/typescript/bin/tsc"
+        "tsc": "node ./node_modules/typescript/bin/tsc"
     },
     "keywords": [
         "Protractor",

@@ -4,12 +4,19 @@ const config_1 = require("../config");
 const protractor_1 = require("protractor");
 function printLater(msg, time) {
     config_1.logger.debug("Sleeping for " + time + " ms...");
-    return protractor_1.browser.sleep(time).then(() => config_1.logger.info(msg));
+    return Promise.resolve("")
+        .then(() => {
+        setTimeout(() => {
+            config_1.logger.info(msg);
+        }, time);
+    })
+        .then(() => config_1.logger.info(msg))
+        .then(() => msg);
 }
 ;
 function nativePromise(msg, time) {
     return new Promise((resolve, reject) => {
-        printLater(msg, time).then(() => resolve("done"));
+        return printLater(msg, time).then(() => resolve("done"));
     });
 }
 exports.nativePromise = nativePromise;
@@ -20,7 +27,3 @@ function protractorPromise(msg, time) {
     });
 }
 ;
-// module.exports {
-//     nativePromise,
-//     protractorPromise,
-// };

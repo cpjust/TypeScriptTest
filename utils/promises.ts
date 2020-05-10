@@ -1,14 +1,21 @@
 import { logger } from "../config";
 import { browser, protractor } from 'protractor';
 
-function printLater(msg: string, time: number) {
+function printLater(msg: string, time: number): Promise<string> {
     logger.debug("Sleeping for " + time + " ms...");
-    return browser.sleep(time).then(() => logger.info(msg));
+    return Promise.resolve("")
+        .then(() => {
+            setTimeout(() => {
+                logger.info(msg);
+            }, time)
+        })
+        .then(() => logger.info(msg))
+        .then(() => msg);
 };
 
-export function nativePromise(msg: string, time: number) {
+export function nativePromise(msg: string, time: number): Promise<string> {
     return new Promise((resolve, reject) => {
-        printLater(msg, time).then(() => resolve("done"));
+        return printLater(msg, time).then(() => resolve("done"));
     });
 };
 

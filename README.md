@@ -6,3 +6,6 @@
 
 # Running the tests:
 `npm test`
+
+# Dleaning converted JS files:
+rm -rf ./ConvertedJSFiles/*

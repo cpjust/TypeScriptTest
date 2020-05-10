@@ -10,6 +10,3 @@ function sleep(time) {
 }
 exports.sleep = sleep;
 ;
-// module.exports {
-//     sleep,
-// };

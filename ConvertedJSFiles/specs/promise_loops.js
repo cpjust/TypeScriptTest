@@ -1,27 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const config_1 = require("../config");
 const promises_1 = require("../utils/promises");
 describe("Testing promises in loops...", () => {
-    it("No loops, just promise chaining.", (done) => {
+    const testPromiseChain = "No loops, just promise chaining.";
+    it(testPromiseChain, (done) => {
+        config_1.logger.info(testPromiseChain);
         return promises_1.nativePromise("First", 3000)
             .then(() => promises_1.nativePromise("Second", 2000))
             .then(() => promises_1.nativePromise("Third", 1000))
             .then(() => done())
             .catch(() => done.fail());
     });
-    it("Promise in Array.reduce().", (done) => {
-        let nums = [1, 2, 3, 4, 5];
+    const testArrayReduce = "Promise in Array.reduce().";
+    it(testArrayReduce, (done) => {
+        config_1.logger.info(testArrayReduce);
+        let nums = [1, 2, 3];
         return nums.reduce((promise, next) => {
             return promise
-                .then(() => promises_1.nativePromise("Loop #" + next, (5 - next) * 1000));
+                .then(() => promises_1.nativePromise("Loop #" + next, (nums.length + 1 - next) * 1000));
         }, Promise.resolve())
             .then(() => done())
             .catch(() => done.fail());
     });
-    it("Promise in a for loop.", (done) => {
-        let promise = Promise.resolve();
-        for (let i = 5, j = 1; i > 0; ++i, ++j) {
-            promise.then(() => promises_1.nativePromise("Loop #" + j, i * 1000));
+    const testForLoopInThen = "Promise in a for loop in a then().";
+    it(testForLoopInThen, (done) => {
+        config_1.logger.info(testForLoopInThen);
+        let promise = Promise.resolve("");
+        for (let i = 3, j = 1; i > 0; ++i, ++j) {
+            promise = promise.then(() => promises_1.nativePromise("Loop #" + j, i * 1000));
+        }
+        return promise
+            .then(() => done())
+            .catch(() => done.fail());
+    });
+    const testForLoop = "Promise in a for loop.";
+    it(testForLoop, (done) => {
+        config_1.logger.info(testForLoop);
+        let promise = Promise.resolve("");
+        for (let i = 3, j = 1; i > 0; ++i, ++j) {
+            promise = promise.then(() => promises_1.nativePromise("Loop #" + j, i * 1000));
         }
         return promise
             .then(() => done())
