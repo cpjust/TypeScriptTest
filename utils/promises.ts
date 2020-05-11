@@ -4,11 +4,12 @@ import { browser, protractor } from 'protractor';
 function printLater(msg: string, time: number): Promise<string> {
     logger.debug("Sleeping for " + time + " ms...");
     return Promise.resolve("")
-        .then(() => {
-            setTimeout(() => {
-                logger.info(msg);
-            }, time)
-        })
+        .then(() => (browser.sleep(time) as unknown as Promise<string>))
+        // .then(() => {
+        //     setTimeout(() => {
+        //         logger.info(msg);
+        //     }, time)
+        // })
         .then(() => logger.info(msg))
         .then(() => msg);
 };
