@@ -32,7 +32,7 @@ describe("Testing promises in loops...", () => {
         logger.info(testForLoopInThen);
         let promise = Promise.resolve("");
 
-        for (let i = 3, j = 1; i > 0; ++i, ++j) {
+        for (let i = 3, j = 1; i > 0; --i, ++j) {
             promise = promise.then(() => nativePromise("Loop #" + j, i * 1000));
         }
 
@@ -46,7 +46,7 @@ describe("Testing promises in loops...", () => {
         logger.info(testForLoop);
         let promise = Promise.resolve("");
 
-        for (let i = 3, j = 1; i > 0; ++i, ++j) {
+        for (let i = 3, j = 1; i > 0; --i, ++j) {
             promise = promise.then(() => nativePromise("Loop #" + j, i * 1000));
         }
 

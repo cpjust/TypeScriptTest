@@ -5,7 +5,8 @@ const protractor_1 = require("protractor");
 function printLater(msg, time) {
     config_1.logger.debug("Sleeping for " + time + " ms...");
     return Promise.resolve("")
-        .then(() => protractor_1.browser.sleep(time))
+        .then(() => protractor_1.browser.sleep(time)
+        .catch((err) => Promise.resolve("")))
         // .then(() => {
         //     setTimeout(() => {
         //         logger.info(msg);

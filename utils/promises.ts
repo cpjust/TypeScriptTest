@@ -4,7 +4,8 @@ import { browser, protractor } from 'protractor';
 function printLater(msg: string, time: number): Promise<string> {
     logger.debug("Sleeping for " + time + " ms...");
     return Promise.resolve("")
-        .then(() => (browser.sleep(time) as unknown as Promise<string>))
+        .then(() => browser.sleep(time)
+            .catch((err) => Promise.resolve("")))
         // .then(() => {
         //     setTimeout(() => {
         //         logger.info(msg);

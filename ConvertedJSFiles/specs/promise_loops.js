@@ -27,7 +27,7 @@ describe("Testing promises in loops...", () => {
     it(testForLoopInThen, (done) => {
         config_1.logger.info(testForLoopInThen);
         let promise = Promise.resolve("");
-        for (let i = 3, j = 1; i > 0; ++i, ++j) {
+        for (let i = 3, j = 1; i > 0; --i, ++j) {
             promise = promise.then(() => promises_1.nativePromise("Loop #" + j, i * 1000));
         }
         return promise
@@ -38,7 +38,7 @@ describe("Testing promises in loops...", () => {
     it(testForLoop, (done) => {
         config_1.logger.info(testForLoop);
         let promise = Promise.resolve("");
-        for (let i = 3, j = 1; i > 0; ++i, ++j) {
+        for (let i = 3, j = 1; i > 0; --i, ++j) {
             promise = promise.then(() => promises_1.nativePromise("Loop #" + j, i * 1000));
         }
         return promise
