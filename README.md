@@ -7,5 +7,8 @@
 # Running the tests:
 `npm test`
 
-# Dleaning converted JS files:
+# Running a specific test:
+`npm test --specs=specs/filename.ts`
+
+# Removing converted JS files:
 rm -rf ./ConvertedJSFiles/*

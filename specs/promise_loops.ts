@@ -3,16 +3,19 @@ import { browser, protractor } from 'protractor';
 import { sleep } from "../utils/timing";
 import { nativePromise } from "../utils/promises";
 
+const TIMEOUT = 10000;
+
 describe("Testing promises in loops...", () => {
     const testPromiseChain = "No loops, just promise chaining.";
     it(testPromiseChain, (done) => {
         logger.info(testPromiseChain);
         return nativePromise("First", 3000)
+            .then(() => nativePromise("Boom!", -1))
             .then(() => nativePromise("Second", 2000))
             .then(() => nativePromise("Third", 1000))
             .then(() => done())
             .catch(() => done.fail());
-    });
+    }, TIMEOUT);
 
     const testArrayReduce = "Promise in Array.reduce().";
     it(testArrayReduce, (done) => {
@@ -21,11 +24,12 @@ describe("Testing promises in loops...", () => {
 
         return nums.reduce((promise, next) => {
             return promise
-                .then(() => nativePromise("Loop #" + next, (nums.length + 1 - next) * 1000));
+                .then(() => nativePromise("Loop #" + next, (nums.length + 1 - next) * 1000))
+                .then(() => nativePromise("Boom!", -1));
         }, Promise.resolve())
             .then(() => done())
             .catch(() => done.fail());
-    });
+    }, TIMEOUT);
 
     const testForLoopInThen = "Promise in a for loop in a then().";
     it(testForLoopInThen, (done) => {
@@ -33,13 +37,15 @@ describe("Testing promises in loops...", () => {
         let promise = Promise.resolve("");
 
         for (let i = 3, j = 1; i > 0; --i, ++j) {
-            promise = promise.then(() => nativePromise("Loop #" + j, i * 1000));
+            promise = promise
+                .then(() => nativePromise("Loop #" + j, i * 1000))
+                .then(() => nativePromise("Boom!", -1));
         }
 
         return promise
             .then(() => done())
             .catch(() => done.fail());
-    });
+    }, TIMEOUT);
 
     const testForLoop = "Promise in a for loop.";
     it(testForLoop, (done) => {
@@ -47,12 +53,14 @@ describe("Testing promises in loops...", () => {
         let promise = Promise.resolve("");
 
         for (let i = 3, j = 1; i > 0; --i, ++j) {
-            promise = promise.then(() => nativePromise("Loop #" + j, i * 1000));
+            promise = promise
+                .then(() => nativePromise("Loop #" + j, i * 1000))
+                .then(() => nativePromise("Boom!", -1));
         }
 
         return promise
             .then(() => done())
             .catch(() => done.fail());
-    });
+    }, TIMEOUT);
 
 });

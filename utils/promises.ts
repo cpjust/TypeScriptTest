@@ -12,6 +12,12 @@ function printLater(msg: string, time: number): Promise<string> {
         //     }, time)
         // })
         .then(() => logger.info(msg))
+        .then(() => {
+            if (time < 0) {
+                return Promise.reject("time cannot be < 0!");
+            }
+            return null;
+        })
         .then(() => msg);
 };
 
