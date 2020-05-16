@@ -63,3 +63,4 @@ typings/
 # Added by cjust:
 report.*.json
 .idea/*
+ConvertedJSFiles/*
